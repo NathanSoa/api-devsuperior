@@ -2,9 +2,12 @@ package com.devsuperior.dsmeta.service;
 
 import com.devsuperior.dsmeta.domain.Sale;
 import com.devsuperior.dsmeta.repository.SaleRepository;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.time.LocalDate;
 
 @Service
 public class SaleService {
@@ -15,7 +18,9 @@ public class SaleService {
         this.saleRepository = saleRepository;
     }
 
-    public List<Sale> findAll(){
-        return saleRepository.findAll();
+    public Page<Sale> findAll(String minDate, String maxDate, Pageable pageable){
+        LocalDate min = LocalDate.parse(minDate);
+        LocalDate max = LocalDate.parse(maxDate);
+        return saleRepository.findAll(min, max, pageable);
     }
 }
